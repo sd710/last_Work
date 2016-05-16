@@ -1,0 +1,15 @@
+.btn-primary {
+  background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #6c6c6c 100%);
+  background-image:      -o-linear-gradient(top, #3c3c3c 0%, #6c6c6c 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#6c6c6c));
+  background-image:         linear-gradient(to bottom, #3c3c3c 0%, #6c6c6c 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff6c6c6c', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border-color: #3c3c3c;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #6c6c6c;
+  background-position: 0 100px;
+}
