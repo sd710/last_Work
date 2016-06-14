@@ -36,29 +36,6 @@ namespace GameStore.WebUI.Infrastructure
 
         private void AddBindings()
         {
-            // Здесь размещаются привязки
-            //Mock<IGameRepository> mock = new Mock<IGameRepository>();
-            //mock.Setup(m => m.Games).Returns(new List<Game>
-            //{
-            //    new Game { Name = "FIFA 16", Price = 1999 },
-            //    new Game { Name = "FIFA 15", Price = 999 },
-            //    new Game { Name = "Uncharted 4", Price = 3990 }
-            //});
-
-            ////kernel.Bind<IGameRepository>().To<EFGameRepository>();
-
-
-
-            //kernel.Bind<IGameRepository>().To<EFGameRepository>();
-
-            //EmailSettings emailSettings = new EmailSettings
-            //{
-            //    WriteAsFile = bool.Parse(ConfigurationManager
-            //        .AppSettings["Email.WriteAsFile"] ?? "false")
-            //};
-
-            //kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
-            //    .WithConstructorArgument("settings", emailSettings);
             kernel.Bind<IGameRepository>().To<EFGameRepository>();
 
             EmailSettings emailSettings = new EmailSettings
