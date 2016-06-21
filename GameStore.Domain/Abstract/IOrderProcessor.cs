@@ -4,6 +4,6 @@ namespace GameStore.Domain.Abstract
 {
     public interface IOrderProcessor
     {
-        void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
+        void ProcessOrder(Cart cart, ShippingDetails shippingDetails); // отправка на почту покупателя       
     }
 }

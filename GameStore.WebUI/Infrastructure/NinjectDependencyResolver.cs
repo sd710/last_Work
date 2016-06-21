@@ -47,7 +47,10 @@ namespace GameStore.WebUI.Infrastructure
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
                 .WithConstructorArgument("settings", emailSettings);
 
+            kernel.Bind<IPaymentProcessor>().To<PaymentOrderProcessor>().WithConstructorArgument("settings", emailSettings); // для подкючения оплаты
+
             kernel.Bind<IAuthProvider>().To<FormAuthProvider>();
+            
         }
     }
 }

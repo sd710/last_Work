@@ -139,7 +139,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object, null); //изменил САМ!
+            CartController controller = new CartController(mock.Object, null, null); //изменил САМ!
 
             // Действие - добавить игру в корзину
             controller.AddToCart(cart, 1, null);
@@ -165,7 +165,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object, null);//изменил САМ!
+            CartController controller = new CartController(mock.Object, null, null);//изменил САМ!
 
             // Действие - добавить игру в корзину
             RedirectToRouteResult result = controller.AddToCart(cart, 2, "myUrl");
@@ -183,7 +183,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController target = new CartController(null, null);//изменил САМ!
+            CartController target = new CartController(null, null, null);//изменил САМ!
 
             // Действие - вызов метода действия Index()
             CartIndexViewModel result
@@ -199,8 +199,8 @@ namespace GameStore.UnitTests
         public void Cannot_Checkout_Empty_Cart()
         {
             // Организация - создание имитированного обработчика заказов
-            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
-
+            Mock<IOrderProcessor> mock1 = new Mock<IOrderProcessor>();
+            Mock<IPaymentProcessor> mock2 = new Mock<IPaymentProcessor>();
             // Организация - создание пустой корзины
             Cart cart = new Cart();
 
@@ -208,13 +208,13 @@ namespace GameStore.UnitTests
             ShippingDetails shippingDetails = new ShippingDetails();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(null, mock.Object);
+            CartController controller = new CartController(null, mock1.Object, mock2.Object);
 
             // Действие
             ViewResult result = controller.Checkout(cart, shippingDetails);
 
             // Утверждение — проверка, что заказ не был передан обработчику 
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+            mock1.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
                 Times.Never());
 
             // Утверждение — проверка, что метод вернул стандартное представление 
@@ -229,14 +229,15 @@ namespace GameStore.UnitTests
         public void Cannot_Checkout_Invalid_ShippingDetails()
         {
             // Организация - создание имитированного обработчика заказов
-            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
-
+            Mock<IOrderProcessor> mock1 = new Mock<IOrderProcessor>();
+            Mock<IPaymentProcessor> mock2 = new Mock<IPaymentProcessor>();
             // Организация — создание корзины с элементом
             Cart cart = new Cart();
             cart.AddItem(new Game(), 1);
 
             // Организация — создание контроллера
-            CartController controller = new CartController(null, mock.Object);
+            CartController controller = new CartController(null, mock1.Object, mock2.Object);
+
 
             // Организация — добавление ошибки в модель
             controller.ModelState.AddModelError("error", "error");
@@ -245,7 +246,7 @@ namespace GameStore.UnitTests
             ViewResult result = controller.Checkout(cart, new ShippingDetails());
 
             // Утверждение - проверка, что заказ не передается обработчику
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+            mock1.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
                 Times.Never());
 
             // Утверждение - проверка, что метод вернул стандартное представление
@@ -260,20 +261,20 @@ namespace GameStore.UnitTests
         public void Can_Checkout_And_Submit_Order()
         {
             // Организация - создание имитированного обработчика заказов
-            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
-
+            Mock<IOrderProcessor> mock1 = new Mock<IOrderProcessor>();
+            Mock<IPaymentProcessor> mock2 = new Mock<IPaymentProcessor>();
             // Организация — создание корзины с элементом
             Cart cart = new Cart();
             cart.AddItem(new Game(), 1);
 
             // Организация — создание контроллера
-            CartController controller = new CartController(null, mock.Object);
+            CartController controller = new CartController(null, mock1.Object, mock2.Object);
 
             // Действие - попытка перехода к оплате
             ViewResult result = controller.Checkout(cart, new ShippingDetails());
 
             // Утверждение - проверка, что заказ передан обработчику
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+            mock1.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
                 Times.Once());
 
             // Утверждение - проверка, что метод возвращает представление 

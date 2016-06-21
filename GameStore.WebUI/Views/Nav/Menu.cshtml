@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<string>
 
 @Html.ActionLink("Домой", "List", "Game", null,
-    new { @class = "btn btn-block btn-default btn-lg" })
+    new { @class = "btn-group-vertical" })
 
 @foreach (var link in Model)
 {
@@ -13,7 +13,7 @@
     page = 1
 }, new
 {
-    @class = "btn btn-block btn-default btn-lg"
+    @class = "btn-group-vertical btn-defaul"
             + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
 })
 }

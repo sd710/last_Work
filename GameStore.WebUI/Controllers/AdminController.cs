@@ -30,22 +30,6 @@ namespace GameStore.WebUI.Controllers
 
         // Перегруженная версия Edit() для сохранения изменений
         [HttpPost]
-        public ActionResult Edit(Game game)
-        {
-            if (ModelState.IsValid)
-            {
-                repository.SaveGame(game);
-                TempData["message"] = string.Format("Изменения в игре \"{0}\" были сохранены", game.Name);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                // Что-то не так со значениями данных
-                return View(game);
-            }
-        }
-
-        [HttpPost]
         public ActionResult Edit(Game game, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
@@ -67,6 +51,11 @@ namespace GameStore.WebUI.Controllers
             }
         }
 
+        public ViewResult Create()
+        {
+            return View("Edit", new Game());
+        }
+
         [HttpPost]
         public ActionResult Delete(int gameId)
         {
@@ -78,6 +67,5 @@ namespace GameStore.WebUI.Controllers
             }
             return RedirectToAction("Index");
         }
-
     }
 }

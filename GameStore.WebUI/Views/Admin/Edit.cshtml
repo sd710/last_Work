@@ -7,7 +7,7 @@
 
 <div class="panel">
     <div class="panel-heading">
-        <h3>Редактирование игры «@Model.Name»</h3>
+        <h3>Редактирование игры &laquo;@Model.Name&raquo;</h3>
     </div>
 
     @using (Html.BeginForm("Edit", "Admin",
@@ -31,6 +31,15 @@
                             {
                                 @Html.TextArea(property.PropertyName, null,
                                     new { @class = "form-control", rows = 5 })
+                            }
+                            else if (property.PropertyName == "Price")
+                            {
+                                @Html.TextBox(property.PropertyName, null,
+                                    new
+                                    {
+                                        @class = "form-control",
+                                        Value = String.Format("{0:0.##}", Model.Price)
+                                    })
                             }
                             else
                             {

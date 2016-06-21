@@ -12,7 +12,7 @@
 
     <h3>
         <strong>@Model.Name</strong>
-        <span class="pull-right label label-primary">@Model.Price.ToString("# руб")</span>
+        <span class="pull-right label label-info">@Model.Price.ToString("# руб")</span>
     </h3>
     @using (Html.BeginForm("AddToCart", "Cart"))
     {

@@ -1,0 +1,23 @@
+﻿@model GameStore.Domain.Entities.ShippingDetails
+@{
+    ViewBag.Title = "Страница оплаты";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Оплата товара</h2>
+
+<div>
+    <div>
+        <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
+            <input name="label" value="@Model.OrderID" @*Номер заказа*@ type="hidden">
+            <input name="receiver" value="НОМЕР КОШЕЛЬКА" type="hidden">
+            <input name="quickpay-form" value="shop" type="hidden">
+            <input type="hidden" name="targets" value="Оплата заказа @Model.OrderID">
+            <input name="sum" value="@Model.TotalPrice" @*Сумма*@ maxlength="10" data-type="number" type="text"><br /><br />
+            <label for="sum">Способ оплаты: </label><br />
+            <input name="successURL" value="http://kupikey.somee.com/Cart/Checkout" type="hidden">
+            <input name="quickpay-back-url" value="http://kupikey.somee.com/" type="hidden">
+        </form>
+    </div>
+
+

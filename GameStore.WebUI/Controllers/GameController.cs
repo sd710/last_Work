@@ -15,7 +15,7 @@ namespace GameStore.WebUI.Controllers
         // GET: Game
         private IGameRepository repository;
 
-        public int pageSize = 4; // количество моделей на странице
+        public int pageSize = 2; // количество моделей на странице
 
         public GameController(IGameRepository repo)
         {

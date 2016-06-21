@@ -4,6 +4,7 @@ using System.Text;
 using GameStore.Domain.Abstract;
 using GameStore.Domain.Entities;
 
+
 namespace GameStore.Domain.Concrete
 {
     public class EmailSettings
@@ -38,8 +39,6 @@ namespace GameStore.Domain.Concrete
                 smtpClient.Host = emailSettings.ServerName;
                 smtpClient.Port = emailSettings.ServerPort;
 
-
-
                 if (emailSettings.WriteAsFile)
                 {
                     smtpClient.DeliveryMethod
@@ -49,34 +48,31 @@ namespace GameStore.Domain.Concrete
                 }
 
                 StringBuilder body = new StringBuilder()
-                    .AppendLine("Новый заказ обработан")
+                    .AppendLine("Новая покупка")
                     .AppendLine("---")
                     .AppendLine("Товары:");
 
                 foreach (var line in cart.Lines)
                 {
+
                     var subtotal = line.Game.Price * line.Quantity;
                     body.AppendFormat("{0} x {1} (итого: {2:c}",
                         line.Quantity, line.Game.Name, subtotal);
                 }
 
                 body.AppendFormat("Общая стоимость: {0:c}", cart.ComputeTotalValue())
+                    .AppendLine("")
                     .AppendLine("---")
                     .AppendLine("Доставка:")
                     .AppendLine(shippingInfo.Name)
-                    .AppendLine(shippingInfo.Line1)
-                    .AppendLine(shippingInfo.Line2 ?? "")
-                    .AppendLine(shippingInfo.Line3 ?? "")
-                    .AppendLine(shippingInfo.City)
-                    .AppendLine(shippingInfo.Country)
                     .AppendLine("---")
-                    .AppendFormat("Подарочная упаковка: {0}",
-                        shippingInfo.GiftWrap ? "Да" : "Нет");
+                    .AppendLine("Код активации/Логин:")
+                    .AppendLine("F6DS6F7SDFS09");
 
                 MailMessage mailMessage = new MailMessage(
                                        emailSettings.MailFromAddress,	// От кого
-                                       emailSettings.MailToAddress,		// Кому
-                                       "Новый заказ отправлен!",		// Тема
+                                       shippingInfo.Email,		        // Кому
+                                       "Покупка из магазина KupiKey",		// Тема
                                        body.ToString()); 				// Тело письма
 
                 if (emailSettings.WriteAsFile)

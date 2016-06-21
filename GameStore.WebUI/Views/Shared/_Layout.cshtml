@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootswatch.less" rel="stylesheet" />
+    <link href="~/Content/variables.less" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 
@@ -17,14 +19,39 @@
     </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">
-            <span class="hidden-xs">GameStore - магазин компьютерных игр</span>
-            <div class="visible-xs">Game</div>
-            <div class="visible-xs">Store</div>
-        </a>
-        @Html.Action("Summary", "Cart")
-    </div>
+    @*<div class="navbar navbar-defaul">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <span class="hidden-xs">GameStore - магазин компьютерных игр</span>
+                <div class="visible-xs">Game</div>
+                <div class="visible-xs">Store</div>
+            </a>
+            @Html.Action("Summary", "Cart")
+         </div>
+   </div>*@
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <span class="hidden-xs">KupiKey - магазин компьютерных аккаунтов</span>
+                    <div class="visible-xs">KupiKey</div>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Найти">
+                    </div>
+                    <button type="submit" class="btn btn-default">Поиск</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    @Html.Action("Summary", "Cart")
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="visible-xs">
         @Html.Action("Menu", "Nav", new { horizontalNav = true })
@@ -38,5 +65,8 @@
             @RenderBody()
         </div>
     </div>
+
+
+
 </body>
 </html>

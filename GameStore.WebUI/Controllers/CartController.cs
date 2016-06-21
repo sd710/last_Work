@@ -11,11 +11,13 @@ namespace GameStore.WebUI.Controllers
 
         private IGameRepository repository;
         private IOrderProcessor orderProcessor;
+        private IPaymentProcessor paymentProcessor;
 
-        public CartController(IGameRepository repo, IOrderProcessor processor)
+        public CartController(IGameRepository repo, IOrderProcessor processor, IPaymentProcessor paymProcessor/*оплата*/)
         {
             repository = repo;
             orderProcessor = processor;
+            paymentProcessor = paymProcessor; // оплата через систему
         }
 
         public ViewResult Checkout()
@@ -33,7 +35,9 @@ namespace GameStore.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
-                orderProcessor.ProcessOrder(cart, shippingDetails);
+                //paymentProcessor.PaymentOrder(cart, shippingDetails);// оплата через систему
+                //View("Payment");
+                orderProcessor.ProcessOrder(cart, shippingDetails); // доставка
                 cart.Clear();
                 return View("Completed");
             }
